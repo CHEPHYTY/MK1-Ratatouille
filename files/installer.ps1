@@ -9,12 +9,14 @@ function random_text {
 
 ## variables
 $wd = random_text
-$path = "$env:temp/$wd"
-$initial_dir = %cd%
+$path = "$env:temp\$wd"
+$initial_dir = $PWD.Path
 
 # goto temp, make working directory
 mkdir $path
-cd $path
-echo "" > poc.txt
-cd $initial_dir
-del installer.ps1
+Set-Location $path
+Set-Content -Path "poc.txt" -Value ""
+Set-Location $initial_dir
+
+# Clean up
+Remove-Item -Path ".\installer.ps1" -Force
